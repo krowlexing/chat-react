@@ -7,18 +7,19 @@ import { UserData } from "../data/UserData";
 interface Props {
     chat: ChatContent;
     me: UserData;
+    onMenuClick: () => void;
     addMessage: (chatId: number, text: string) => void;
 }
 
 export function ChatWindowView(props: Props) {
-    const { me, chat, addMessage } = props;
+    const { me, chat, addMessage, onMenuClick } = props;
 
     return (
         <FlexWidth>
             <Row>
-                <ActionButton>МЭНЮ </ActionButton>
+                <ActionButton onClick={onMenuClick}>МЭНЮ </ActionButton>
                 <EmptySpace mediaMaxWidth={800} />
-                <ChatTitle>{chat.chatId}</ChatTitle>
+                <ChatTitle>{chat.title}</ChatTitle>
                 <EmptySpace />
             </Row>
 
@@ -51,9 +52,9 @@ const EmptySpace = styled.div.attrs<{ mediaMaxWidth?: number }>(props => props)`
 
 const Row = styled.div`
     display: flex;
-    background: #003090;
     justify-content: space-between;
     align-items: center;
+    background: ${DarkColor};
 `;
 
 const ChatTitle = styled.div`
@@ -67,7 +68,6 @@ const FlexWidth = styled.div`
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    background: white;
 `;
 
 const ChatContainer = styled(FlexWidth)`
@@ -80,5 +80,4 @@ const ChatContainer = styled(FlexWidth)`
     max-width: 50rem;
     margin-left: auto;
     margin-right: auto;
-    background-color: ${DarkColor};
 `;

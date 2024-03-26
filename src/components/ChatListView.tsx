@@ -17,7 +17,6 @@ export function ChatListView(props: Props) {
 }
 
 const ChatListContainer = styled.div`
-    background: gray;
     margin-top: 10px;
     border-radius: 4px;
     margin-bottom: 10px;

@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router";
 
-export function TestPage() {
+export function ChatPage() {
     const navigate = useNavigate();
     return (
         <>

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Message } from "../Message";
+import { Message } from "./Message";
 import { MessageData } from "../data/MessageData";
 import { useAppSelector } from "../reducers/testChatReducer";
 import { useEffect, useRef } from "react";

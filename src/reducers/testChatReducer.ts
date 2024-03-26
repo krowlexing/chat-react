@@ -12,7 +12,10 @@ import {
     getChat,
     getMe,
     getUsers,
+    postLogin,
     postMessageToChat,
+    postRegister,
+    token,
 } from "../network/network";
 import { useDispatch, useSelector } from "react-redux";
 import { PromiseResult, makeRequestThunk, state } from "./thunker_lib";
@@ -71,6 +74,32 @@ const [requestChat, chatHandlers] = makeAxiosThunk("chat", (id: number) => {
     return getChat(id);
 });
 
+const [requestLogin, loginHandlers] = makeRequestThunk(
+    "login",
+    (username: string, password: string) => dispatch => {
+        return postLogin(username, password).then(response => {
+            token.update(response.data);
+            dispatch(requestMe());
+            return response.data;
+        });
+    },
+    {},
+    state<State>(),
+);
+
+const [requestRegister, registerHandlers] = makeRequestThunk(
+    "register",
+    (username: string, password: string) => dispatch => {
+        return postRegister(username, password).then(response => {
+            token.update(response.data);
+            dispatch(requestMe());
+            return response.data;
+        });
+    },
+    {},
+    state<State>(),
+);
+
 const [requestMe, meHandlers] = makeAxiosThunk("me", () => {
     return getMe();
 });
@@ -92,6 +121,8 @@ type State = {
     userId: number | undefined;
     me: PromiseResult<UserData>;
     chats: PromiseResult<ChatData[]>;
+    login: PromiseResult<string>;
+    register: PromiseResult<string>;
     users: PromiseResult<{ username: string }[]>;
     chat: PromiseResult<ChatContent>;
     postMessage: PromiseResult<boolean>;
@@ -113,6 +144,8 @@ const [reducer, actions] = newReducer<State>({
     userId: undefined,
     chats: { status: "none" },
     users: { status: "none" },
+    login: { status: "none" },
+    register: { status: "none" },
     chat: { status: "none" },
     postMessage: { status: "none" },
 })
@@ -130,6 +163,8 @@ const [reducer, actions] = newReducer<State>({
     .handleThunker(chatHandlers)
     .handleThunker(meHandlers)
     .handleThunker(chatsHandlers)
+    .handleThunker(loginHandlers)
+    .handleThunker(registerHandlers)
     .done();
 
 const store = createStore(reducer, applyMiddleware(thunk));
@@ -142,6 +177,8 @@ const allActions = {
     postMessage,
     requestChat,
     requestMe,
+    requestLogin,
+    requestRegister,
 };
 
 export { store as testChatStore };

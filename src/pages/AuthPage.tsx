@@ -10,39 +10,82 @@ import {
     useAppSelector,
 } from "../reducers/testChatReducer";
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 export function AuthPage() {
     const navigate = useNavigate();
 
-    const dispatch = useAppDispatch();
     const me = useAppSelector(state => state.me.status);
+    const login = useAppSelector(state => state.login.status);
+    const register = useAppSelector(state => state.login.status);
+
+    const authError =
+        login !== "pending" &&
+        register !== "pending" &&
+        (login === "failed" || register === "failed");
+
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
-        console.log("why&&");
         if (me === "ok") {
-            navigate("./test/chats");
+            navigate("./app");
         }
     }, [me, navigate]);
 
-    const onAuth = (jwtToken: string) => {
-        token.update(jwtToken);
-        dispatch(actions.requestMe());
-    };
     return (
         <>
-            <Container>
-                <InnerContainer>
-                    <Register onToken={onAuth} />
-                </InnerContainer>
-                <InnerContainer>
-                    <Login onToken={onAuth} />
-                </InnerContainer>
-            </Container>
+            <Centered>
+                <Column>
+                    <Centered>
+                        {authError ? "Ошибка аутентификации" : ""}
+                    </Centered>
+                    <Row>
+                        <InnerContainer>
+                            <Register
+                                onRegisterClick={(username, password) => {
+                                    dispatch(
+                                        actions.requestRegister(
+                                            username,
+                                            password,
+                                        ),
+                                    );
+                                }}
+                            />
+                        </InnerContainer>
+                        <InnerContainer>
+                            <Login
+                                onLoginClick={(username, password) => {
+                                    dispatch(
+                                        actions.requestLogin(
+                                            username,
+                                            password,
+                                        ),
+                                    );
+                                }}
+                            />
+                        </InnerContainer>
+                    </Row>
+                </Column>
+            </Centered>
         </>
     );
 }
 
-const Container = styled.div`
+export const Column = styled.div`
+    display: flex;
+    flex-direction: column;
+`;
+
+const Centered = styled.div`
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+`;
+
+export const Row = styled.div`
     display: flex;
 `;
 

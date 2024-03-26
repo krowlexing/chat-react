@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { MessageData } from "./data/MessageData";
+import { MessageData } from "../data/MessageData";
 
 interface Props {
     user: number;
@@ -30,7 +30,7 @@ const MessageBody = styled.div`
     color: black;
     padding: 0px 10px 0px 10px;
     width: fit-content;
-
+    margin-left: 10px;
     align-self: flex-end;
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 100px;
@@ -43,4 +43,5 @@ const MessageRightBody = styled(MessageBody)`
     margin-left: auto;
     border-bottom-left-radius: 100px;
     border-bottom-right-radius: 0px;
+    margin-right: 10px;
 `;

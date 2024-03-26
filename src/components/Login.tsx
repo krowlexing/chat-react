@@ -1,18 +1,14 @@
 import { useState } from "react";
-import { postLogin } from "../network/network";
-import { useAppDispatch } from "../reducers/testChatReducer";
 
 interface Props {
-    onToken: (token: string) => void;
+    onLoginClick: (usersname: string, password: string) => void;
 }
 
 export function Login(props: Props) {
-    const { onToken } = props;
+    const { onLoginClick } = props;
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-
-    const dispatch = useAppDispatch();
 
     return (
         <>
@@ -33,13 +29,7 @@ export function Login(props: Props) {
                     onChange={e => setPassword(e.target.value)}
                 />
             </div>
-            <button
-                onClick={() =>
-                    postLogin(username, password).then(res => {
-                        onToken(res.data);
-                    })
-                }
-            >
+            <button onClick={() => onLoginClick(username, password)}>
                 Login
             </button>
         </>

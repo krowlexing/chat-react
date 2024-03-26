@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { UserData } from "../data/UserData";
+import { DarkColor } from "./ChatCard";
 
 interface Props {
     user: UserData;
@@ -17,7 +18,7 @@ export function ProfileView(props: Props) {
 }
 
 const ProfileContainer = styled.div`
-    background: blue;
+    background: ${DarkColor};
     width: 100%;
     height: 3rem;
     display: flex;

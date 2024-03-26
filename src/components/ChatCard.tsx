@@ -21,10 +21,10 @@ export function ChatCard(props: Props) {
 export const DarkColor = "#000010";
 
 const Title = styled.div`
-    background: ${DarkColor};
+    background: #2d2d2d;
     padding: 5px;
-    margin: 2px;
-    border-radius: 5px;
+    margin: 5px;
+    border-radius: 10px;
     max-width: 300px;
     min-width: 150px;
     font-size: 2rem;

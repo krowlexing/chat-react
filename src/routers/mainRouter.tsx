@@ -2,7 +2,6 @@ import { redirect } from "react-router";
 import { createBrowserRouter } from "react-router-dom";
 import { getMe, token } from "../network/network";
 import { AuthPage } from "../pages/AuthPage";
-import { MainPage } from "../pages/MainPage";
 import { testRouter } from "./testRouter";
 import { actions, testChatStore } from "../reducers/testChatReducer";
 import { DemoPage } from "../pages/DemoPage";
@@ -29,7 +28,7 @@ export const router = createBrowserRouter([
         element: <DemoPage />,
     },
     {
-        path: "/test",
+        path: "/app",
         children: testRouter,
         loader: async () => {
             try {
@@ -43,9 +42,5 @@ export const router = createBrowserRouter([
                 return redirect("/");
             }
         },
-    },
-    {
-        path: "/app",
-        element: <MainPage />,
     },
 ]);

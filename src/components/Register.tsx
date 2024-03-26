@@ -1,21 +1,17 @@
 import { useState } from "react";
-import { postRegister } from "../network/network";
 
 interface Props {
-    onToken: (token: string) => void;
+    onRegisterClick: (usersname: string, password: string) => void;
 }
 
 export function Register(props: Props) {
-    const { onToken } = props;
+    const { onRegisterClick } = props;
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
-    const [response, setResponse] = useState("");
-
     return (
         <>
-            <p>{response}</p>
             <p>Registration</p>
             <div>
                 <input
@@ -33,14 +29,7 @@ export function Register(props: Props) {
                     onChange={e => setPassword(e.target.value)}
                 />
             </div>
-            <button
-                onClick={() =>
-                    postRegister(username, password).then(res => {
-                        console.log(JSON.stringify(res.data));
-                        //onToken(res.data);
-                    })
-                }
-            >
+            <button onClick={() => onRegisterClick(username, password)}>
                 Register
             </button>
         </>
