@@ -2,7 +2,7 @@ import { redirect } from "react-router";
 import { createBrowserRouter } from "react-router-dom";
 import { getMe, token } from "../network/network";
 import { AuthPage } from "../pages/AuthPage";
-import { actions, testChatStore } from "../reducers/testChatReducer";
+import { actions, appStore } from "../reducers/reducer";
 import { DemoPage } from "../pages/DemoPage";
 import { ChatPage } from "../pages/ChatPage";
 
@@ -16,7 +16,7 @@ export const router = createBrowserRouter([
                     return null;
                 }
                 const me = await getMe();
-                testChatStore.dispatch(actions.meOk(me.data));
+                appStore.dispatch(actions.meOk(me.data));
                 return redirect("/app");
             } catch {
                 return null;
@@ -36,7 +36,7 @@ export const router = createBrowserRouter([
                     return redirect("/");
                 }
                 const me = await getMe();
-                testChatStore.dispatch(actions.meOk(me.data));
+                appStore.dispatch(actions.meOk(me.data));
                 return null;
             } catch {
                 return redirect("/");

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { ChatData } from "../reducers/testChatReducer";
+import { ChatData } from "../reducers/reducer";
 import { ChatCard } from "./ChatCard";
 
 interface Props {

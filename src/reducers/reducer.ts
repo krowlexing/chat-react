@@ -193,9 +193,9 @@ const allActions = {
     requestNewChat,
 };
 
-export { store as testChatStore };
+export { store as appStore };
 export { allActions as actions };
-export type { State as TestChatState };
+export type { State as AppState };
 
 export type AppDispatch = ThunkDispatch<State, void, UnknownAction>;
 

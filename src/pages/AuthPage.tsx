@@ -2,15 +2,9 @@ import { Login } from "../components/Login";
 import { Register } from "../components/Register";
 import styled from "styled-components";
 
-import { token } from "../network/network";
 import { useNavigate } from "react-router";
-import {
-    actions,
-    useAppDispatch,
-    useAppSelector,
-} from "../reducers/testChatReducer";
+import { actions, useAppDispatch, useAppSelector } from "../reducers/reducer";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 
 export function AuthPage() {
     const navigate = useNavigate();

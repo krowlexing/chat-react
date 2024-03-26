@@ -5,12 +5,13 @@ import { Input } from "./Input";
 import { useState } from "react";
 
 interface Props {
+    status: "ok" | "failed" | "pending" | "none";
     closeModal: () => void;
     onAddClick: (username: string) => void;
 }
 
 export function AddChatModal(props: Props) {
-    const { closeModal, onAddClick } = props;
+    const { status, closeModal, onAddClick } = props;
 
     const [username, setUsername] = useState("");
 
@@ -26,6 +27,9 @@ export function AddChatModal(props: Props) {
                 }}
             >
                 <Column>
+                    <Paragraph centered={true}>
+                        {status == "failed" ? "Wrong request" : ""}
+                    </Paragraph>
                     <Paragraph centered={true}>Add chat</Paragraph>
                     <Input onValue={setUsername} value={username} />
                     <button onClick={() => onAddClick(username)}>Add</button>

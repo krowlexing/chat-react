@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { ProfileView } from "./ProfileView";
 import { ChatListView } from "./ChatListView";
-import { ChatData } from "../reducers/testChatReducer";
+import { ChatData } from "../reducers/reducer";
 import { UserData } from "../data/UserData";
 import { DarkColor } from "./ChatCard";
 
@@ -33,6 +33,7 @@ const Centered = styled.div.attrs<{ hide?: boolean }>(props => props)`
     flex-direction: column;
     flex-grow: 0;
     max-width: 300px;
+    min-width: 200px;
     overflow-x: hidden;
 
     ${props =>

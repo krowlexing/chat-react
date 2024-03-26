@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { UserData } from "../data/UserData";
-import { ChatData } from "../reducers/testChatReducer";
+import { ChatData } from "../reducers/reducer";
 import { ChatContent } from "../data/Chat";
 import { useState } from "react";
 import { SidePanel } from "../components/SidePanel";
@@ -18,7 +18,11 @@ export function DemoPage() {
     const closeModal = () => setModal(false);
 
     const modalWindow = (
-        <AddChatModal closeModal={closeModal} onAddClick={() => {}} />
+        <AddChatModal
+            status={"none"}
+            closeModal={closeModal}
+            onAddClick={() => {}}
+        />
     );
 
     const me: UserData = {

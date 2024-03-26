@@ -2,11 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { ChatWindowView } from "../components/ChatWindowView";
 import { SidePanel } from "../components/SidePanel";
-import {
-    actions,
-    useAppDispatch,
-    useAppSelector,
-} from "../reducers/testChatReducer";
+import { actions, useAppDispatch, useAppSelector } from "../reducers/reducer";
 import { AddChatModal } from "../components/AddChatModal";
 
 export function ChatPage() {
@@ -57,6 +53,7 @@ export function ChatPage() {
 
     const modalWindow = (
         <AddChatModal
+            status={newChatStatus}
             closeModal={closeModal}
             onAddClick={username => {
                 dispatch(actions.requestNewChat(username));
