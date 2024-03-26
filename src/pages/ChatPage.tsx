@@ -1,36 +1,31 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { DarkColor } from "../components/ChatCard";
 import { ChatWindowView } from "../components/ChatWindowView";
-import { Input } from "../components/Input";
 import { SidePanel } from "../components/SidePanel";
-import { Column } from "./AuthPage";
 import {
     actions,
     useAppDispatch,
     useAppSelector,
 } from "../reducers/testChatReducer";
+import { AddChatModal } from "../components/AddChatModal";
 
 export function ChatPage() {
-    const [username, setUsername] = useState("");
     const [modal, setModal] = useState(false);
-
     const [showMenu, setShowMenu] = useState(false);
 
     const dispatch = useAppDispatch();
-    const currentChat = useAppSelector(state => state.currentChatId);
-    const setCurrentChat = (chat: number) =>
-        dispatch(actions.chatClicked(chat));
-    const me = useAppSelector(state => state.me);
 
-    const chats = useAppSelector(state => state.chats);
-    const chat = useAppSelector(state => state.chat);
-    const newChatStatus = useAppSelector(state => state.newChatRequest.status);
-    const shouldShowMenu = currentChat == null || showMenu;
-    const closeModal = () => {
-        dispatch(actions.newChatRequestNone());
-        setModal(false);
-    };
+    const { me, currentChat, chats, chat, newChatStatus } = useAppSelector(
+        state => {
+            return {
+                currentChat: state.currentChatId,
+                me: state.me,
+                chats: state.chats,
+                chat: state.chat,
+                newChatStatus: state.newChatRequest.status,
+            };
+        },
+    );
 
     useEffect(() => {
         if (currentChat !== undefined) {
@@ -53,35 +48,23 @@ export function ChatPage() {
         dispatch(actions.requestChats());
     }, [dispatch]);
 
-    const modalWindow = (
-        <ModalBackground
-            onClick={() => {
-                console.log("clicked on modalbackground");
-                closeModal();
-            }}
-        >
-            <Modal
-                onClick={e => {
-                    console.log("clicked on modal");
+    const closeModal = () => {
+        dispatch(actions.newChatRequestNone());
+        setModal(false);
+    };
+    const setCurrentChat = (chat: number) =>
+        dispatch(actions.chatClicked(chat));
 
-                    e.stopPropagation();
-                }}
-            >
-                <Column>
-                    <Paragraph centered={true}>Add chat</Paragraph>
-                    <Input onValue={setUsername} value={username} />
-                    <button
-                        onClick={() => {
-                            dispatch(actions.requestNewChat(username));
-                        }}
-                    >
-                        Add
-                    </button>
-                </Column>
-            </Modal>
-        </ModalBackground>
+    const modalWindow = (
+        <AddChatModal
+            closeModal={closeModal}
+            onAddClick={username => {
+                dispatch(actions.requestNewChat(username));
+            }}
+        />
     );
 
+    const shouldShowMenu = currentChat == null || showMenu;
     return (
         <Flex>
             <SidePanel
@@ -106,31 +89,6 @@ export function ChatPage() {
         </Flex>
     );
 }
-
-const Paragraph = styled.p.attrs<{ centered?: boolean }>(props => props)`
-    font-size: 1.2rem;
-    ${props => (props.centered ? "text-align: center;" : "")}
-`;
-
-const Modal = styled.div`
-    padding: 10px;
-    border-radius: 10px;
-    display: flex;
-    background: ${DarkColor};
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-`;
-
-const ModalBackground = styled.div`
-    display: flex;
-    height: 100%;
-    width: 100%;
-    background: rgba(0, 0, 0, 0.2);
-    position: absolute;
-    flex: 1;
-`;
 
 const Flex = styled.div`
     display: flex;

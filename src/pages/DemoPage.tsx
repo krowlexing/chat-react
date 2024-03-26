@@ -5,15 +5,11 @@ import { ChatContent } from "../data/Chat";
 import { useState } from "react";
 import { SidePanel } from "../components/SidePanel";
 import { ChatWindowView } from "../components/ChatWindowView";
-import { DarkColor } from "../components/ChatCard";
-import { InputField } from "../components/InputField";
-import { Input } from "../components/Input";
-import { Column } from "./AuthPage";
+import { AddChatModal } from "../components/AddChatModal";
 
 export function DemoPage() {
     const [currentChat, setCurrentChat] = useState<number | null>(null);
 
-    const [username, setUsername] = useState("");
     const [modal, setModal] = useState(false);
 
     const [showMenu, setShowMenu] = useState(false);
@@ -22,15 +18,7 @@ export function DemoPage() {
     const closeModal = () => setModal(false);
 
     const modalWindow = (
-        <ModalBackground onClick={closeModal}>
-            <Modal>
-                <Column>
-                    <Paragraph centered={true}>Add chat</Paragraph>
-                    <Input onValue={setUsername} value={username} />
-                    <button onClick={closeModal}>Add</button>
-                </Column>
-            </Modal>
-        </ModalBackground>
+        <AddChatModal closeModal={closeModal} onAddClick={() => {}} />
     );
 
     const me: UserData = {
@@ -63,31 +51,6 @@ export function DemoPage() {
         </Flex>
     );
 }
-
-const Paragraph = styled.p.attrs<{ centered?: boolean }>(props => props)`
-    font-size: 1.2rem;
-    ${props => (props.centered ? "text-align: center;" : "")}
-`;
-
-const Modal = styled.div`
-    padding: 10px;
-    border-radius: 10px;
-    display: flex;
-    background: ${DarkColor};
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-`;
-
-const ModalBackground = styled.div`
-    display: flex;
-    height: 100%;
-    width: 100%;
-    background: rgba(0, 0, 0, 0.2);
-    position: absolute;
-    flex: 1;
-`;
 
 const Flex = styled.div`
     display: flex;
