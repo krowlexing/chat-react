@@ -17,7 +17,9 @@ export function ChatWindowView(props: Props) {
     return (
         <FlexWidth>
             <Row>
-                <ActionButton onClick={onMenuClick}>МЭНЮ </ActionButton>
+                <ActionButton onClick={onMenuClick}>
+                    <Icon src="/public/menu.png" />
+                </ActionButton>
                 <EmptySpace mediaMaxWidth={800} />
                 <ChatTitle>{chat.title}</ChatTitle>
                 <EmptySpace />
@@ -30,8 +32,15 @@ export function ChatWindowView(props: Props) {
     );
 }
 
+const Icon = styled.img`
+    margin: 10px;
+    height: 1.5rem;
+`;
+
 const ActionButton = styled.div`
     flex: 1;
+    display: flex;
+    align-items: center;
     @media (min-width: 800px) {
         display: none;
         flex: 0;

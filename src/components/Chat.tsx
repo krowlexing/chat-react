@@ -1,4 +1,4 @@
-import { ChatWindow } from "./ChatWindow";
+import { MessageList } from "./MessageList";
 import { InputField } from "./InputField";
 import { ChatContent } from "../data/Chat";
 import { UserData } from "../data/UserData";
@@ -14,7 +14,7 @@ export function Chat(props: Props) {
 
     return (
         <>
-            <ChatWindow messages={chat.data} me={me} />
+            <MessageList messages={chat.data} me={me} />
             <InputField onMessageSend={msg => addMessage(chat.chatId, msg)} />
         </>
     );

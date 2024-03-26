@@ -9,7 +9,7 @@ interface Props {
     messages: MessageData[];
 }
 
-export function ChatWindow(props: Props) {
+export function MessageList(props: Props) {
     const { messages, me } = props;
 
     const ref = useRef<HTMLDivElement | null>(null);
