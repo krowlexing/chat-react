@@ -15,9 +15,10 @@ export function InputField(props: Props) {
             onChange={e => setValue(e.target.value)}
             value={value}
             onKeyDown={e => {
-                if (e.code === "Enter") {
+                if (e.code === "Enter" && !e.shiftKey) {
                     onMessageSend(value);
                     setValue("");
+                    e.preventDefault();
                 }
             }}
         />

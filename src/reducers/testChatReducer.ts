@@ -12,6 +12,7 @@ import {
     getChat,
     getMe,
     getUsers,
+    newChat,
     postLogin,
     postMessageToChat,
     postRegister,
@@ -65,6 +66,13 @@ function makeAxiosThunk<
 const [requestChats, chatsHandlers] = makeAxiosThunk("chats", () => {
     return chats();
 });
+
+const [requestNewChat, newChatHandlers] = makeAxiosThunk(
+    "newChatRequest",
+    (username: string) => {
+        return newChat("", "", [username]);
+    },
+);
 
 const [requestUsers, usersHandlers] = makeAxiosThunk("users", () => {
     return getUsers();
@@ -122,6 +130,7 @@ type State = {
     me: PromiseResult<UserData>;
     chats: PromiseResult<ChatData[]>;
     login: PromiseResult<string>;
+    newChatRequest: PromiseResult<string>;
     register: PromiseResult<string>;
     users: PromiseResult<{ username: string }[]>;
     chat: PromiseResult<ChatContent>;
@@ -148,6 +157,7 @@ const [reducer, actions] = newReducer<State>({
     register: { status: "none" },
     chat: { status: "none" },
     postMessage: { status: "none" },
+    newChatRequest: { status: "none" },
 })
     .handle(increment, (state, n) => {
         return { ...state, value: state.value + n };
@@ -165,6 +175,7 @@ const [reducer, actions] = newReducer<State>({
     .handleThunker(chatsHandlers)
     .handleThunker(loginHandlers)
     .handleThunker(registerHandlers)
+    .handleThunker(newChatHandlers)
     .done();
 
 const store = createStore(reducer, applyMiddleware(thunk));
@@ -179,6 +190,7 @@ const allActions = {
     requestMe,
     requestLogin,
     requestRegister,
+    requestNewChat,
 };
 
 export { store as testChatStore };

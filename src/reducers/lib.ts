@@ -75,11 +75,13 @@ class ReducerBuilder<
             [ActionObject<`${P}Ok`, T>, (state: S, p: T) => S],
             [ActionObject<`${P}Err`, void>, (state: S) => S],
             [ActionObject<`${P}Pending`, void>, (state: S) => S],
+            [ActionObject<`${P}None`, void>, (state: S) => S],
         ],
     ) {
         return this.handle(arg[0][0], arg[0][1])
             .handle(arg[1][0], arg[1][1])
-            .handle(arg[2][0], arg[2][1]);
+            .handle(arg[2][0], arg[2][1])
+            .handle(arg[3][0], arg[3][1]);
     }
 
     actions(): Actions<Tuple> & ThunkActions<ThunkTuple, S> {

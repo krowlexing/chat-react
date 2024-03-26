@@ -2,9 +2,9 @@ import { redirect } from "react-router";
 import { createBrowserRouter } from "react-router-dom";
 import { getMe, token } from "../network/network";
 import { AuthPage } from "../pages/AuthPage";
-import { testRouter } from "./testRouter";
 import { actions, testChatStore } from "../reducers/testChatReducer";
 import { DemoPage } from "../pages/DemoPage";
+import { ChatPage } from "../pages/ChatPage";
 
 export const router = createBrowserRouter([
     {
@@ -17,7 +17,7 @@ export const router = createBrowserRouter([
                 }
                 const me = await getMe();
                 testChatStore.dispatch(actions.meOk(me.data));
-                return redirect("/test/chats");
+                return redirect("/app");
             } catch {
                 return null;
             }
@@ -29,7 +29,7 @@ export const router = createBrowserRouter([
     },
     {
         path: "/app",
-        children: testRouter,
+        element: <ChatPage />,
         loader: async () => {
             try {
                 if (token.value === "") {

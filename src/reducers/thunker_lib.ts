@@ -68,11 +68,13 @@ export function makeRequestThunk<
         [ActionObject<`${P}Ok`, T>, (state: State, p: T) => State],
         [ActionObject<`${P}Err`, void>, (state: State) => State],
         [ActionObject<`${P}Pending`, void>, (state: State) => State],
+        [ActionObject<`${P}None`, void>, (state: State) => State],
     ],
 ] {
     const ok = action(`${type}Ok`)<T>();
     const err = action(`${type}Err`)();
     const pending = action(`${type}Pending`)();
+    const none = action(`${type}None`)();
 
     const okHandler = (state: State, p: T) => {
         const newState = { ...state };
@@ -82,7 +84,7 @@ export function makeRequestThunk<
         }
         return newState;
     };
-    const handlePending = (state: State) => {
+    const pendingHandler = (state: State) => {
         const newState = { ...state };
         (newState as any)[type] = {
             status: "pending",
@@ -94,12 +96,18 @@ export function makeRequestThunk<
         }
         return newState;
     };
-    const handlerFailed = (state: State) => {
+    const failedHandler = (state: State) => {
         const newState = { ...state };
         (newState as any)[type] = { status: "failed", value: undefined };
         if (bonusActions.failed) {
             return bonusActions.failed(newState);
         }
+        return newState;
+    };
+
+    const noneHandler = (state: State) => {
+        const newState = { ...state };
+        (newState as any)[type] = { status: "none" };
         return newState;
     };
 
@@ -118,8 +126,9 @@ export function makeRequestThunk<
             },
         [
             [ok, okHandler],
-            [err, handlerFailed],
-            [pending, handlePending],
+            [err, failedHandler],
+            [pending, pendingHandler],
+            [none, noneHandler],
         ],
     ] as const;
 }
